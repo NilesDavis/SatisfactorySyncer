@@ -1,0 +1,75 @@
+﻿<Window x:Class="SatisfactorySyncer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SatisfactorySyncer"
+        mc:Ignorable="d"
+        Title="SatisfactorySyncer" Height="475" Width="420">
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!--Toolbar-->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <!--Log-->
+        </Grid.RowDefinitions>
+        <!--<ToolBarTray Grid.ColumnSpan="99">
+            <ToolBar>
+            </ToolBar>
+        </ToolBarTray>-->
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Local SaveGame folder" Margin="5"/>
+        <TextBox Grid.Row="2" Grid.Column="0"  TextWrapping="NoWrap" Text="{Binding Path=SaveGamesLocalPath, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+        <Button Grid.Row="2" Grid.Column="1" Content="..." Command="{Binding Path=LocateLocalFolderCommand}" Width="20" Margin="5"/>
+        <Button Grid.Row="2" Grid.Column="2" Content="Open path" Command="{Binding Path=OpenPathCommand}" CommandParameter="{Binding Path=SaveGamesLocalPath}" Margin="5"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Cloud SaveGame folder" Margin="5"/>
+        <TextBox Grid.Row="4" Grid.Column="0" TextWrapping="NoWrap" Text="{Binding Path=SaveGamesCloudPath, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+        <Button Grid.Row="4" Grid.Column="1" Content="..." Command="{Binding Path=LocateCloudFolderCommand}" Width="20" Margin="5"/>
+        <Button Grid.Row="4" Grid.Column="2" Content="Open path" Command="{Binding Path=OpenPathCommand}" CommandParameter="{Binding Path=SaveGamesCloudPath}" Margin="5"/>
+        
+        <Button Content="Refresh" Grid.Row="5" Grid.ColumnSpan="1" Command="{Binding Path=SyncCommand}"  Margin="5"/>
+        <Label Grid.Row="5" Grid.Column="1" Background="{Binding Path=SyncColor, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Grid.Row="5" Grid.Column="2" Content="Open Calculator" Command="{Binding Path=OpenCalculatorCommand}" Margin="5"/>
+
+        <Grid Grid.Row="6" Grid.ColumnSpan="99">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Local sessions" Margin="5" Grid.ColumnSpan="2"/>
+            <ListBox Grid.Row="1" Grid.Column="0" Height="150" Margin="5" SelectionMode="Extended" ItemsSource="{Binding Path=LocalSessionList, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedLocalSession, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Path=SelectedLocalSessionDate}" Margin="5"/>
+            <Button Content="Push" Grid.Row="3" Grid.Column="0" Command="{Binding Path=PushCommand}" Margin="5" />
+
+
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="Cloud sessions" Margin="5"/>
+            <ListBox Grid.Row="1" Grid.Column="2" Height="150" Margin="5" SelectionMode="Extended" ItemsSource="{Binding Path=CloudSessionList, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Path=SelectedCloudSession, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Path=SelectedCloudSessionDate}" Margin="5"/>
+            <Button Content="Pull" Grid.Row="3" Grid.Column="2" Command="{Binding Path=PullCommand}" Margin="5"/>
+        </Grid>
+
+        <TextBox Text="{Binding Path=LogString, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Grid.Row="7" Grid.ColumnSpan="99" x:Name="logbox" Margin="5">
+        </TextBox>
+
+    </Grid>
+</Window>
